@@ -75,7 +75,8 @@ function outputUsers(users) {
   userList.innerHTML = '';
   users.forEach((user) => {
     const li = document.createElement('li');
-    li.innerText = user.username;
+    li.innerText = `${user.username}     `;
+    li.innerHTML += `<i class = "fas fa-circle online"></i>`;
     userList.appendChild(li);
   });
 }
