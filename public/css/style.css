@@ -46,7 +46,7 @@ a {
 /* Chat Page */
 
 .chat-container {
-	max-width: 1100px;
+	width: 1100px;
 	background: #fff;
 	margin: 30px auto;
 	overflow: hidden;
@@ -122,6 +122,7 @@ a {
 }
 
 .chat-form-container form {
+	margin-top: 20px;
 	display: flex;
 }
 
@@ -137,6 +138,12 @@ a {
 	max-width: 500px;
 	margin: 80px auto;
 	color: #fff;
+}
+
+.join-container#blur.active {
+	filter: blur(20px);
+	pointer-events: none;
+	user-select: none;
 }
 
 .join-header {
@@ -193,3 +200,23 @@ a {
 		display: none;
 	}
 }
+
+#popup {
+	background-color: #fff;
+	width: 500px;
+	max-width: 500px;
+	position: fixed;
+	top: 17%;
+	left: 32.5%;
+	visibility: hidden;
+	transition: 0.5s;
+	opacity: 0;
+}
+
+#popup.active {
+	visibility: visible;
+	transition: 0.5s;
+	opacity: 1;
+}
+
+

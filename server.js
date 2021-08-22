@@ -2,6 +2,8 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
+const mongoose = require('mongoose');
+const UserDetails = require('./models/userDetails');
 const formatMessage = require('./utils/messages');
 const {
   userJoin,
@@ -14,6 +16,16 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+// db connection
+mongoose.connect(
+  "mongodb+srv://adnan1308:abc123+-@cluster0.5fd9h.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true
+  },
+  () => {
+    console.log("connected to database");
+  }
+);
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -68,6 +80,21 @@ io.on('connection', socket => {
       });
     }
   });
+
+  // typing
+  socket.on('typing', ({username, room}) => {
+    socket.broadcast
+      .to(room)
+      .emit(
+        "typing",
+        {username, room}
+      );
+  })
+
+  // login 
+  socket.on('login', async ({username, email, password}) => {
+    await UserDetails.create({user_name: username, email, password});
+  })
 });
 
 const PORT = process.env.PORT || 3000;

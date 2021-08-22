@@ -2,6 +2,9 @@ const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
+const typingBar = document.getElementById('typingBar');
+const messageBox = document.getElementById('msg');
+
 
 // Get username and room from URL
 const { username, room } = Qs.parse(location.search, {
@@ -28,6 +31,14 @@ socket.on('message', (message) => {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 });
 
+// Have typing on screen
+setInterval(() => {
+  typingBar.innerText = "";
+}, 3000)
+socket.on('typing', ({username, room}) => {
+  typingBar.innerText = `${username} is typing....`;
+})
+
 // Message submit
 chatForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -48,6 +59,11 @@ chatForm.addEventListener('submit', (e) => {
   e.target.elements.msg.value = '';
   e.target.elements.msg.focus();
 });
+
+// typing listener 
+messageBox.addEventListener('input', () => {
+  socket.emit('typing', {username, room});
+})
 
 // Output message to DOM
 function outputMessage(message) {
