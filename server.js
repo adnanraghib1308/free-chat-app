@@ -94,7 +94,7 @@ io.on('connection', socket => {
 
   // login 
   socket.on('login', async ({username, email, password}) => {
-    await UserDetails.create({user_name: username, email, password});
+    await UserDetails.create({user_name: username, password});
   })
 });
 
