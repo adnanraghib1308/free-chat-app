@@ -20,7 +20,8 @@ const io = socketio(server);
 mongoose.connect(
   "mongodb+srv://adnan1308:abc123+-@cluster0.5fd9h.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
   {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   },
   () => {
     console.log("connected to database");
